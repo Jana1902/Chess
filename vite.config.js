@@ -2,7 +2,8 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: "public", // Use the "public" folder as the project root
+  base: "./", // Use relative paths
+  publicDir: "public",
   build: {
     rollupOptions: {
       external: ["jquery"],
