@@ -3,13 +3,11 @@ import Chessboard from "chessboardjs";
 import { Chess } from "chess.js";
 
 // ------------------------
-// Game & Timer Setup
+// Game & Timer Setup (Bot-Only Mode)
 // ------------------------
 const game = new Chess();
-
-// Timers: both sides have 10 minutes (600 seconds)
-let playerTime = 600;
-let botTime = 600;
+let playerTime = 600; // 10 minutes for You (White)
+let botTime = 600; // 10 minutes for Stockfish (Black)
 let timerInterval = null;
 
 function startTimer() {
@@ -68,40 +66,28 @@ function endGame() {
 startTimer();
 
 // ------------------------
-// UI Setup (Bot Mode Only)
-// ------------------------
-// Always playing with bot (Stockfish as Black)
-const botMode = true; // Remove two-player mode
-
-// ------------------------
-// Board Setup (Click-to-Select Moves)
+// Board Setup (Click-to-Select Moves, Bot-Only Mode)
 // ------------------------
 const board = Chessboard("myBoard", {
   position: "start",
-  draggable: false, // disable drag-and-drop
+  draggable: false, // Use click-to-select interface
   pieceTheme: "img/chesspieces/wikipedia/{piece}.png",
   orientation: "white",
-  // We'll update board and rebind events in onSnapEnd
-  onSnapEnd: function () {
-    board.position(game.fen());
-    bindSquareClicks();
-  },
+  onSnapEnd: () => board.position(game.fen()),
 });
 
-// Initially bind clicks on board squares
-bindSquareClicks();
+// Use delegated binding for click events on squares
+$(document).on("click", ".square-55d63", onSquareClick);
 
 let selectedSquare = null;
 let legalMoves = [];
 
-// Clear selection and remove highlights
 function clearSelection() {
   selectedSquare = null;
   legalMoves = [];
   $(".square-55d63").removeClass("highlight legal-move error-highlight");
 }
 
-// Highlight the selected square and add a dot to legal moves
 function highlightMoves(square) {
   clearSelection();
   selectedSquare = square;
@@ -112,69 +98,58 @@ function highlightMoves(square) {
   });
 }
 
-// Click handler for board squares
 function onSquareClick() {
+  // Only allow moves for White
+  if (game.turn() !== "w") return;
+
   const square = $(this).attr("data-square");
   console.log("Square clicked:", square);
   const piece = game.get(square);
 
-  // If no piece is selected and the clicked square has a piece of the mover
   if (!selectedSquare) {
-    if (piece && piece.color === game.turn()) {
+    if (piece && piece.color === "w") {
       highlightMoves(square);
     }
     return;
   }
 
-  // If clicking the same square cancels selection
   if (square === selectedSquare) {
     clearSelection();
     return;
   }
 
-  // If clicked square is a legal destination, make the move
   const move = legalMoves.find((m) => m.to === square);
   if (move) {
-    const moveObj = { from: selectedSquare, to: square, promotion: "q" };
-    console.log("Making move:", moveObj);
-    const result = game.move(moveObj);
-    if (!result) {
-      // Illegal move (shouldn't happen if legalMoves is correct)
+    console.log("Making move from", selectedSquare, "to", square);
+    game.move({ from: selectedSquare, to: square, promotion: "q" });
+    board.position(game.fen());
+    clearSelection();
+    // checkGameOver();
+    // // After your move (White), if it's Black's turn, trigger Stockfish
+    // if (game.turn() === "b" && !game.game_over()) {
+    //   setTimeout(askStockfishForMove, 100);
+    // }
+  } else {
+    if (piece && piece.color === "w") {
+      highlightMoves(square);
+    } else {
       $(this).addClass("error-highlight");
       setTimeout(() => {
         $(this).removeClass("error-highlight");
       }, 500);
-    }
-    board.position(game.fen());
-    clearSelection();
-    // In bot mode, after human move (White), trigger Stockfish for Black's move
-    if (game.turn() === "b" && botMode && !game.game_over()) {
-      setTimeout(askStockfishForMove, 100);
-    }
-    checkGameOver();
-  } else {
-    // If clicked square has a piece of mover, change selection; else, clear selection
-    if (piece && piece.color === game.turn()) {
-      highlightMoves(square);
-    } else {
       clearSelection();
     }
   }
 }
 
-// Bind click events to squares (using delegation to ensure dynamic elements)
-function bindSquareClicks() {
-  // Remove any previous binding to avoid duplicates
-  $(".square-55d63").off("click", onSquareClick);
-  $(".square-55d63").on("click", onSquareClick);
-}
-
 // ------------------------
-// Stockfish Integration
+// Stockfish Integration (Bot-Only Mode)
 // ------------------------
+// Since you're using Vite, place stockfish.js in your public folder
+// and reference it with an absolute path.
 let stockfishWorker = null;
 function initStockfish() {
-  stockfishWorker = new Worker("stockfish.js");
+  stockfishWorker = new Worker("/stockfish.js");
   stockfishWorker.onmessage = function (event) {
     console.log("Stockfish message:", event.data);
     if (event.data.startsWith("bestmove")) {
@@ -215,16 +190,25 @@ function makeBotMove(bestMove) {
   checkGameOver();
 }
 
-function checkGameOver() {
-  if (game.game_over()) {
-    clearInterval(timerInterval);
-    endGame();
-  }
-}
+// function checkGameOver() {
+//   if (game.game_over()) {
+//     clearInterval(timerInterval);
+//     endGame();
+//   }
+// }
 
 // ------------------------
-// Restart Game
+// Play & Restart Button Handlers
 // ------------------------
+$("#playBtn").click(function () {
+  game.reset();
+  board.position(game.fen());
+  clearSelection();
+  resetTimers();
+  startTimer();
+  $("#gameResult").text("");
+});
+
 $("#restartBtn").click(function () {
   game.reset();
   board.position(game.fen());

@@ -1,9 +1,8 @@
-/* Import DM Sans */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: #f0f0f0;
+  background: linear-gradient(135deg, #ece9e6, #ffffff);
   margin: 0;
   padding: 20px;
   display: flex;
@@ -15,9 +14,9 @@ body {
 #container {
   text-align: center;
   background: #ffffff;
-  padding: 20px;
+  padding: 20px 30px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
@@ -28,8 +27,9 @@ header h1 {
 
 .info {
   display: flex;
-  justify-content: space-around;
-  margin: 10px 0;
+  justify-content: center;
+  gap: 30px;
+  margin: 15px 0;
 }
 
 .info-item {
@@ -38,13 +38,12 @@ header h1 {
 
 .name {
   font-weight: bold;
-  margin-right: 10px;
 }
 
 .timer {
   background: #4caf50;
   color: #fff;
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 5px;
 }
 
@@ -52,7 +51,11 @@ header h1 {
   margin: 20px 0;
 }
 
-#restartBtn {
+#controls {
+  margin-top: 10px;
+}
+
+#controls button {
   padding: 10px 20px;
   font-size: 16px;
   background: #2196f3;
@@ -60,9 +63,10 @@ header h1 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin: 0 10px;
 }
 
-#restartBtn:hover {
+#controls button:hover {
   background: #1976d2;
 }
 
@@ -90,12 +94,12 @@ header h1 {
   transform: translate(-50%, -50%);
 }
 
-/* Highlight the selected square */
+/* Highlight selected square */
 .highlight {
   outline: 3px solid #ff9800;
 }
 
-/* Error highlighting for illegal moves */
+/* Error highlight for illegal moves */
 .error-highlight {
   outline: 3px solid red;
 }
