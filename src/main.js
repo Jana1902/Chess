@@ -17,6 +17,7 @@ let capturedByBlack = []; // White pieces captured by Stockfish
 const board = Chessboard("myBoard", {
   position: "start",
   draggable: false, // Use click-to-select interface
+  draggable: false, // Use click-to-select interface
   pieceTheme: "img/chesspieces/wikipedia/{piece}.png",
   orientation: "white",
   onSnapEnd: () => board.position(game.fen()),
@@ -116,6 +117,7 @@ function initStockfish() {
 initStockfish();
 
 function askStockfishForMove() {
+  if (!stockfishWorker) return;
   if (!stockfishWorker) return;
   const fen = game.fen();
   console.log("Sending FEN to Stockfish:", fen);

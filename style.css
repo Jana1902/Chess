@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
+<<<<<<< HEAD
 html, body {
   height: 100%;
   margin: 0;
@@ -13,10 +14,22 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+=======
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: linear-gradient(135deg, #ece9e6, #ffffff);
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+>>>>>>> 4002eae4411d7db4b332820da4d831fe1a63cc04
 }
 
 #container {
   text-align: center;
+<<<<<<< HEAD
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,6 +42,12 @@ body {
   overflow-y: auto;
   width: 100%;
   max-width: 600px;
+=======
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+>>>>>>> 4002eae4411d7db4b332820da4d831fe1a63cc04
 }
 
 header h1 {
@@ -40,22 +59,29 @@ header h1 {
 .info {
   display: flex;
   justify-content: center;
+<<<<<<< HEAD
   align-items: center;
+=======
+>>>>>>> 4002eae4411d7db4b332820da4d831fe1a63cc04
   gap: 30px;
   margin: 15px 0;
 }
 
 .info-item {
   font-size: 1.2em;
+<<<<<<< HEAD
   display: flex;
   align-items: center;
   gap: 10px;
+=======
+>>>>>>> 4002eae4411d7db4b332820da4d831fe1a63cc04
 }
 
 .name {
   font-weight: bold;
 }
 
+<<<<<<< HEAD
 .captured-container {
   display: flex;
   gap: 5px;
@@ -68,6 +94,17 @@ header h1 {
 
 #board-container {
   margin:  0;
+=======
+.timer {
+  background: #4caf50;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 5px;
+}
+
+#board-container {
+  margin: 20px 0;
+>>>>>>> 4002eae4411d7db4b332820da4d831fe1a63cc04
 }
 
 #controls {
@@ -95,6 +132,7 @@ header h1 {
   color: #e53935;
 }
 
+<<<<<<< HEAD
 /* Modal Popup Styles */
 .modal {
   display: none; /* Hidden by default */
@@ -131,6 +169,8 @@ header h1 {
   color: black;
 }
 
+=======
+>>>>>>> 4002eae4411d7db4b332820da4d831fe1a63cc04
 /* Chessboard square styling */
 .square-55d63 {
   position: relative;
