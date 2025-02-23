@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite';
+// vite.config.js
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: './',
-  publicDir: 'public',
+  root: "public", // Use the "public" folder as the project root
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets'
-  }
+    outDir: "../dist", // Output the built files into a "dist" folder at the project root
+    emptyOutDir: true,
+  },
 });
