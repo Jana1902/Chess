@@ -16,15 +16,20 @@ body {
 }
 
 #container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
   text-align: center;
   background: #ffffff;
-  padding: 20px 30px;
+  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   max-height: 100vh;
   overflow-y: auto;
   width: 90%;
   max-width: 600px;
+  overflow: hidden;
 }
 
 header h1 {
@@ -63,7 +68,7 @@ header h1 {
 }
 
 #board-container {
-  margin: 20px 0;
+  margin: 0;
 }
 
 #controls {
