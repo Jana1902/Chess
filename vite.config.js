@@ -11,4 +11,10 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ["stockfish"],
   },
+  base: "./", // Ensures relative paths work
+  publicDir: "public", // Ensures assets like Stockfish.js are served
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
+  },
 });
